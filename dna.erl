@@ -4,7 +4,7 @@
 % AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC
 % A C G T
 
-% 65 - A, 67 - C,  71 - G, 84 - T
+% 65 - A, 67 - C, 71 - G, 84 - T
 
 -module(dna).
 -export([start/0]).
