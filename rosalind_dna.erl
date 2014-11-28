@@ -6,7 +6,7 @@
 
 % 65 - A, 67 - C, 71 - G, 84 - T
 
--module(dna).
+-module(rosalind_dna).
 -export([start/0]).
 
 count_agct([65 | T], [Ac, Cc, Gc, Tc]) -> count_agct(T, [Ac + 1, Cc, Gc, Tc]);
