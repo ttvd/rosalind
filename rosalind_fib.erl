@@ -1,4 +1,4 @@
-% Rosalind, problem REVC.
+% Rosalind, problem FIB.
 % 11/28/2014.
 
 % 5 3
