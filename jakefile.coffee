@@ -32,7 +32,7 @@ task_build = (problem_name) ->
         build_result = shelljs.exec ("erlc " + file_name), {silent: true}
         if build_result.code != 0
             console.log "Failed building \"" + problem_name + "\" problem."
-            console.log jsesc build_result.output
+            console.log build_result.output
         else
             console.log "Successfully built \"" + problem_name + "\" problem."
     else
@@ -49,7 +49,7 @@ task_run = (problem_name) ->
             console.log "Failed running \"" + problem_name + "\" problem."
         else
             console.log "Successfully ran \"" + problem_name + "\" problem."
-        console.log jsesc run_result.output
+        console.log run_result.output
 task "run", [], task_run
 
 # Clean task.
