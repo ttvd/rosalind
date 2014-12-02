@@ -6,9 +6,13 @@
 
 -module(rosalind_rna).
 -export([start/0]).
+-import(rosalind, [nucleobase_list/1, nucleobase_list_print/1]).
 
-replace_ut([84 | T]) -> [85] ++ replace_ut(T);
-replace_ut([H | T]) -> [H] ++ replace_ut(T);
-replace_ut([]) -> [].
+replace_nucleobases(L) -> replace_nucleobases(L, []).
+replace_nucleobases([thymine | T], Acc) -> replace_nucleobases(T, Acc ++ [uracil]);
+replace_nucleobases([H | T], Acc) -> replace_nucleobases(T, Acc ++ [H]);
+replace_nucleobases([], Acc) -> Acc.
 
-start() -> io:format("~p", [replace_ut("GATGGAACTTGACTACGTAAATT")]).
+start() ->
+    L = nucleobase_list("GATGGAACTTGACTACGTAAATT"),
+    nucleobase_list_print(replace_nucleobases(L)).
