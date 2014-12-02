@@ -27,6 +27,7 @@ task "default", [], task_default
 # Build problem.
 desc "Build problem, jake build[dna] -- will build DNA problem."
 task_build = (problem_name) ->
+    jake.Task["build_common"].invoke();
     file_name = "rosalind_" + problem_name + ".erl"
     if fs.existsSync file_name
         build_result = shelljs.exec ("erlc " + file_name), {silent: true}
@@ -36,7 +37,7 @@ task_build = (problem_name) ->
         else
             console.log "Successfully built \"" + problem_name + "\" problem."
     else
-        console.log "Could not find \"" + problem_name + "\" problem."
+        console.log "Could not find \"" + problem_name + "\" problem. Please pass problem name as parameter."
 task "build", [], task_build
 
 # Run problem.
@@ -51,6 +52,19 @@ task_run = (problem_name) ->
             console.log "Successfully ran \"" + problem_name + "\" problem."
         console.log run_result.output
 task "run", [], task_run
+
+# Build common utility module.
+desc "Build common utility module, jake build_common -- will build common module."
+task_build_common = (params) ->
+    file_name = "rosalind.erl"
+    if fs.existsSync file_name
+        build_result = shelljs.exec ("erlc " + file_name), {silent: true}
+        if build_result.code != 0
+            console.log "Failed building common module."
+            console.log build_result.output
+        else
+            console.log "Successfully built common module."
+task "build_common", [], task_build_common
 
 # Clean task.
 desc "Clean all product files, jake clean -- will remove all intermediate files."
