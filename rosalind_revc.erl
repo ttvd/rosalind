@@ -9,11 +9,14 @@
 
 -module(rosalind_revc).
 -export([start/0]).
+-import(rosalind, [nucleobase_list/1, nucleobase_list_print/1]).
 
-replace_revc([65 | T]) -> replace_revc(T) ++ [84];
-replace_revc([84 | T]) -> replace_revc(T) ++ [65];
-replace_revc([67 | T]) -> replace_revc(T) ++ [71];
-replace_revc([71 | T]) -> replace_revc(T) ++ [67];
+replace_revc([adenine | T]) -> replace_revc(T) ++ [thymine];
+replace_revc([thymine | T]) -> replace_revc(T) ++ [adenine];
+replace_revc([cytosine | T]) -> replace_revc(T) ++ [guanine];
+replace_revc([guanine | T]) -> replace_revc(T) ++ [cytosine];
 replace_revc([]) -> [].
 
-start() -> io:format("~p", [replace_revc("AAAACCCGGT")]).
+start() ->
+    L = nucleobase_list("AAAACCCGGT"),
+    nucleobase_list_print(replace_revc(L)).
