@@ -6,7 +6,7 @@
 
 -module(rosalind_rna).
 -export([start/0]).
--import(rosalind, [nucleobase_list/1, nucleobase_list_print/1]).
+-import(rosalind_util_nucleobase, [nucleobase_list/1, nucleobase_list_print/1]).
 
 replace_nucleobases(L) -> replace_nucleobases(L, []).
 replace_nucleobases([thymine | T], Acc) -> replace_nucleobases(T, Acc ++ [uracil]);
