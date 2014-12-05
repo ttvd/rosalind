@@ -56,14 +56,16 @@ task "run", [], task_run
 # Build common utility module.
 desc "Build common utility module, jake build_common -- will build common module."
 task_build_common = (params) ->
-    file_name = "rosalind.erl"
-    if fs.existsSync file_name
-        build_result = shelljs.exec ("erlc " + file_name), {silent: true}
-        if build_result.code != 0
-            console.log "Failed building common module."
-            console.log build_result.output
-        else
-            console.log "Successfully built common module."
+    console.log "Building common modules."
+    for file in fs.readdirSync(".")
+        if file.match /rosalind_util_.*\.erl/i
+            module_name = (file.replace /.erl/, "").replace /rosalind_/, ""
+            build_result = shelljs.exec ("erlc " + file), {silent: true}
+            if build_result.code != 0
+                console.log "Failed building \"" + module_name + "\" module."
+                console.log build_result.output
+            else
+                console.log "Successfully built \"" + module_name + "\" module."
 task "build_common", [], task_build_common
 
 # Clean task.
