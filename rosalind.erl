@@ -3,6 +3,7 @@
 
 -module(rosalind).
 -export([nucleobase_list/1, nucleobase_list/2, nucleobase_list_print/1]).
+-export([list_drop_head/2, list_print_space_separated/1]).
 
 % List of possible nucleobases.
 -type nucleobase() :: adenine | guanine | thymine | cytosine | uracil.
@@ -22,6 +23,7 @@ nucleobase_list([H | T], NL) ->
         85 -> nucleobase_list(T, NL ++ [uracil])
     end.
 
+% Print nucleobase sequence.
 nucleobase_list_print([]) ->
     io:format("~n"), ok;
 nucleobase_list_print([H | T]) ->
@@ -33,3 +35,12 @@ nucleobase_list_print([H | T]) ->
         uracil -> io:format("U")
     end,
     nucleobase_list_print(T).
+
+% Drop N elements from beginning of a list.
+list_drop_head([], _N) -> [];
+list_drop_head(L, 0) -> L;
+list_drop_head([_H | T], N) -> list_drop_head(T, N - 1).
+
+% Print space separated elements of a list.
+list_print_space_separated([]) -> ok;
+list_print_space_separated([H | T]) -> io:format("~w ", [H]), list_print_space_separated(T).
