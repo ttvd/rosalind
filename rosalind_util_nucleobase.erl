@@ -2,13 +2,17 @@
 % 12/04/2014.
 
 -module(rosalind_util_nucleobase).
--export([nucleobase_list/1, nucleobase_list_print/1, nucleobase_list_string/1]).
+-export([nucleobase_list/1, nucleobase_list_print/1, nucleobase_list_string/1, nucleobase_list_length/1]).
+-export([nucleobase_list_count_gc/1]).
 
 % List of possible nucleobases.
 -type nucleobase() :: adenine | guanine | thymine | cytosine | uracil.
 
 % List of types exported.
 -export_type([nucleobase/0]).
+
+% Return length of nucleobase list.
+nucleobase_list_length(L) -> length(nucleobase_list_length).
 
 % Convert nucleobase string to a list.
 nucleobase_list(L) -> nucleobase_list(L, []).
@@ -41,3 +45,13 @@ nucleobase_list_string([H | T], S) ->
 % Print nucleobase sequence
 nucleobase_list_print(L) ->
     io:format("~s~n", [nucleobase_list_string(L)]).
+
+% Count number of GC nucleotides in a sequence.
+nucleobase_list_count_gc(L) -> nucleobase_list_count_gc(L, 0).
+nucleobase_list_count_gc([], Count) -> Count;
+nucleobase_list_count_gc([H | T], Count) ->
+    case H of
+        cytosine -> nucleobase_list_count_gc(T, Count + 1);
+        guanine -> nucleobase_list_count_gc(T, Count + 1);
+        _ -> nucleobase_list_count_gc(T, Count)
+    end.
