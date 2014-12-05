@@ -9,7 +9,7 @@
 
 -module(rosalind_revc).
 -export([start/0]).
--import(rosalind, [nucleobase_list/1, nucleobase_list_print/1]).
+-import(rosalind_util_nucleobase, [nucleobase_list/1, nucleobase_list_print/1]).
 
 replace_revc([adenine | T]) -> replace_revc(T) ++ [thymine];
 replace_revc([thymine | T]) -> replace_revc(T) ++ [adenine];
