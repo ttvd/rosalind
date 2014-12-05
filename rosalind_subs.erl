@@ -7,7 +7,7 @@
 
 -module(rosalind_subs).
 -export([start/0]).
--import(rosalind, [list_drop_head/2, list_print_space_separated/1]).
+-import(rosalind_util_list, [list_drop_head/2, list_print_space_separated/1]).
 
 find_subs(MainStr, SubStr) -> find_subs(MainStr, MainStr, SubStr, SubStr, 0, 0, []).
 
