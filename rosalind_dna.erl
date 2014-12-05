@@ -6,7 +6,8 @@
 
 -module(rosalind_dna).
 -export([start/0]).
--import(rosalind, [nucleobase_list/1, nucleobase_list_print/1]).
+-import(rosalind_util_nucleobase, [nucleobase_list/1, nucleobase_list_print/1]).
+-import(rosalind_util_list, [list_print_space_separated/1]).
 
 count_nucleobases(L) -> count_nucleobases(L, [0, 0, 0, 0]).
 count_nucleobases([], C) -> C;
@@ -20,4 +21,4 @@ count_nucleobases([H | T], [Ac, Cc, Gc, Tc]) ->
 
 start() ->
     L = nucleobase_list("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"),
-    io:format("~w", [count_nucleobases(L)]).
+    list_print_space_separated(count_nucleobases(L)).
