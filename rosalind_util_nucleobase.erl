@@ -2,7 +2,6 @@
 % 12/04/2014.
 
 -module(rosalind_util_nucleobase).
-
 -export([nucleobase_list/1, nucleobase_list/2, nucleobase_list_print/1]).
 
 % List of possible nucleobases.
