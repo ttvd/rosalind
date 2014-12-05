@@ -12,7 +12,7 @@
 -export_type([nucleobase/0]).
 
 % Return length of nucleobase list.
-nucleobase_list_length(L) -> length(nucleobase_list_length).
+nucleobase_list_length(L) -> length(L).
 
 % Convert nucleobase string to a list.
 nucleobase_list(L) -> nucleobase_list(L, []).
