@@ -4,7 +4,9 @@
 -module(rosalind_util_fasta).
 -include("rosalind_util_fasta.hrl").
 -import(rosalind_util_nucleobase, [nucleobase_list/1, nucleobase_list_string/1, nucleobase_list_print/1]).
--export([fasta_create/1, fasta_print_name/1, fasta_print/1]).
+-import(rosalind_util_nucleobase, [nucleobase_list_length/1, nucleobase_list_count_gc/1]).
+
+-export([fasta_create/1, fasta_print_name/1, fasta_print/1, fasta_gc_content/1]).
 
 % Parse string and return a fasta record.
 fasta_create([]) -> error;
@@ -29,3 +31,7 @@ fasta_print(F) ->
     io:format(">"),
     fasta_print_name(F),
     nucleobase_list_print(Seq).
+
+% Get GC content of fasta.
+fasta_gc_content(#fasta{code=_Code, sequence=Seq}) ->
+    100.0 * (nucleobase_list_count_gc(Seq) / nucleobase_list_length(Seq)).
