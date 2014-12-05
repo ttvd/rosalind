@@ -2,7 +2,7 @@
 % 12/04/2014.
 
 -module(rosalind_util_nucleobase).
--export([nucleobase_list/1, nucleobase_list/2, nucleobase_list_print/1]).
+-export([nucleobase_list/1, nucleobase_list_print/1, nucleobase_list_string/1]).
 
 % List of possible nucleobases.
 -type nucleobase() :: adenine | guanine | thymine | cytosine | uracil.
@@ -19,18 +19,25 @@ nucleobase_list([H | T], NL) ->
         67 -> nucleobase_list(T, NL ++ [cytosine]);
         71 -> nucleobase_list(T, NL ++ [guanine]);
         84 -> nucleobase_list(T, NL ++ [thymine]);
-        85 -> nucleobase_list(T, NL ++ [uracil])
+        85 -> nucleobase_list(T, NL ++ [uracil]);
+        _ -> nucleobase_list(T, NL)
     end.
 
-% Print nucleobase sequence.
-nucleobase_list_print([]) ->
-    io:format("~n"), ok;
-nucleobase_list_print([H | T]) ->
+% Create a string representation of nucleobase string.
+nucleobase_list_string([]) -> error;
+nucleobase_list_string(N) -> nucleobase_list_string(N, []).
+
+nucleobase_list_string([], S) -> S;
+nucleobase_list_string([H | T], S) ->
     case H of
-        adenine -> io:format("A");
-        cytosine -> io:format("C");
-        guanine -> io:format("G");
-        thymine -> io:format("T");
-        uracil -> io:format("U")
+        adenine -> S ++ "A";
+        cytosine -> S ++ "C";
+        guanine -> S ++ "G";
+        thymine -> S ++ "T";
+        uracil -> S ++ "U"
     end,
-    nucleobase_list_print(T).
+    nucleobase_list_string(T, S).
+
+% Print nucleobase sequence
+nucleobase_list_print(L) ->
+    io:format("~s~n", nucleobase_list_string(L)).
