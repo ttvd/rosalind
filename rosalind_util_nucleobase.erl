@@ -20,7 +20,8 @@ nucleobase_list([H | T], NL) ->
         71 -> nucleobase_list(T, NL ++ [guanine]);
         84 -> nucleobase_list(T, NL ++ [thymine]);
         85 -> nucleobase_list(T, NL ++ [uracil]);
-        _ -> nucleobase_list(T, NL)
+        _ ->
+            nucleobase_list(T, NL)
     end.
 
 % Create a string representation of nucleobase string.
@@ -30,14 +31,13 @@ nucleobase_list_string(N) -> nucleobase_list_string(N, []).
 nucleobase_list_string([], S) -> S;
 nucleobase_list_string([H | T], S) ->
     case H of
-        adenine -> S ++ "A";
-        cytosine -> S ++ "C";
-        guanine -> S ++ "G";
-        thymine -> S ++ "T";
-        uracil -> S ++ "U"
-    end,
-    nucleobase_list_string(T, S).
+        adenine -> nucleobase_list_string(T, S ++ [65]);
+        cytosine -> nucleobase_list_string(T, S ++ [67]);
+        guanine -> nucleobase_list_string(T, S ++ [71]);
+        thymine -> nucleobase_list_string(T, S ++ [84]);
+        uracil -> nucleobase_list_string(T, S ++ [85])
+    end.
 
 % Print nucleobase sequence
 nucleobase_list_print(L) ->
-    io:format("~s~n", nucleobase_list_string(L)).
+    io:format("~s~n", [nucleobase_list_string(L)]).
