@@ -3,7 +3,7 @@
 
 -module(rosalind_util_protein).
 -import(rosalind_util_nucleobase, [nucleobase_list/1]).
--export([protein_list_length/1, protein_list/1, protein_list_string/1]).
+-export([protein_list_length/1, protein_list/1, protein_list_string/1, protein_list_print/1]).
 
 % List of possible proteins (F, L, I, M, V, S, P, T, A, Y, H, Q, N, K, D, E, C, W, R, G, Stop).
 -type protein() :: phenylalanine | leucine | isoleucine | methionine | valine | serine | proline | threonine |
@@ -105,7 +105,9 @@ protein_list([guanine, adenine, guanine | T], PL) -> protein_list(T, PL ++ [glut
 protein_list([uracil, guanine, uracil | T], PL) -> protein_list(T, PL ++ [cysteine]);
 protein_list([uracil, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [cysteine]);
 
-protein_list([uracil, guanine, guanine | T], PL) -> protein_list(T, PL ++ [tryptophan]).
+protein_list([uracil, guanine, guanine | T], PL) -> protein_list(T, PL ++ [tryptophan]);
+
+protein_list(NL, PL) -> io:format("not matched").
 
 % Create string representation of a protein list.
 protein_list_string(PL) -> protein_list_string(PL, []).
@@ -128,10 +130,10 @@ protein_list_string([lysine | T], S) -> protein_list_string(T, S ++ "K");
 protein_list_string([aspartic_acid | T], S) -> protein_list_string(T, S ++ "D");
 protein_list_string([glutamic_acid | T], S) -> protein_list_string(T, S ++ "E");
 protein_list_string([cysteine | T], S) -> protein_list_string(T, S ++ "C");
-protein_list_string([arginine | T], S) -> protein_list_string(T, S ++ "R");
+protein_list_string([argenine | T], S) -> protein_list_string(T, S ++ "R");
 protein_list_string([glycine | T], S) -> protein_list_string(T, S ++ "G");
 protein_list_string([tryptophan | T], S) -> protein_list_string(T, S ++ "W");
-protein_list_string([protein_stop | T], S) -> protein_list_string(T, S ++ "STOP").
+protein_list_string([protein_stop | T], S) -> protein_list_string(T, S).
 
 % Print protein sequence.
 protein_list_print(PL) ->
