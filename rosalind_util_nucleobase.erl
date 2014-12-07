@@ -42,7 +42,7 @@ nucleobase_list_string([H | T], S) ->
         uracil -> nucleobase_list_string(T, S ++ [85])
     end.
 
-% Print nucleobase sequence
+% Print nucleobase sequence.
 nucleobase_list_print(L) ->
     io:format("~s~n", [nucleobase_list_string(L)]).
 
