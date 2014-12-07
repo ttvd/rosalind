@@ -105,9 +105,7 @@ protein_list([guanine, adenine, guanine | T], PL) -> protein_list(T, PL ++ [glut
 protein_list([uracil, guanine, uracil | T], PL) -> protein_list(T, PL ++ [cysteine]);
 protein_list([uracil, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [cysteine]);
 
-protein_list([uracil, guanine, guanine | T], PL) -> protein_list(T, PL ++ [tryptophan]);
-
-protein_list(NL, PL) -> io:format("not matched").
+protein_list([uracil, guanine, guanine | T], PL) -> protein_list(T, PL ++ [tryptophan]).
 
 % Create string representation of a protein list.
 protein_list_string(PL) -> protein_list_string(PL, []).
