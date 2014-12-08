@@ -10,19 +10,19 @@
 
 % Parse multiple fasta strings into a list. We treat > as separator.
 fasta_parse_strings([]) -> error;
-fasta_parse_strings([62 | T]) -> fasta_parse_strings_collect(T, [], []).
-fasta_parse_strings_collect([62 | T], Buf, FastaList) -> fasta_parse_strings_collect(T, [], FastaList ++ [fasta_create(Buf)]);
+fasta_parse_strings([$> | T]) -> fasta_parse_strings_collect(T, [], []).
+fasta_parse_strings_collect([$> | T], Buf, FastaList) -> fasta_parse_strings_collect(T, [], FastaList ++ [fasta_create(Buf)]);
 fasta_parse_strings_collect([H | T], Buf, FastaList) -> fasta_parse_strings_collect(T, Buf ++ [H], FastaList);
 fasta_parse_strings_collect([], Buf, FastaList) -> FastaList ++ [fasta_create(Buf)].
 
 % Parse string and return a fasta record.
 fasta_create([]) -> error;
-fasta_create([95 | T]) -> fasta_create_helper(T, 0);
+fasta_create([$_ | T]) -> fasta_create_helper(T, 0);
 fasta_create([_H | T]) -> fasta_create(T).
 
 % Helper function to parse fasta code, not exported.
 fasta_create_helper([], _Code) -> error;
-fasta_create_helper([H | T], Code) when (H > 47) and (H < 58) -> fasta_create_helper(T, Code * 10 + (H - 48));
+fasta_create_helper([H | T], Code) when (H >= $0) and (H =< $9) -> fasta_create_helper(T, Code * 10 + (H - 48));
 fasta_create_helper(L, Code) -> #fasta{code=Code, sequence=nucleobase_list(L)}.
 
 % Print fasta name.
