@@ -3,7 +3,8 @@
 
 -module(rosalind_util_protein).
 -import(rosalind_util_nucleobase, [nucleobase_list/1]).
--export([protein_list_length/1, protein_list/1, protein_list_string/1, protein_list_print/1, protein_list_mass/1]).
+-export([protein_list_length/1, protein_list_string/1, protein_list_print/1, protein_list_mass/1]).
+-export([protein_list_from_nucleobase/1]).
 
 % List of possible proteins (F, L, I, M, V, S, P, T, A, Y, H, Q, N, K, D, E, C, W, R, G, Stop).
 -type protein() :: phenylalanine | leucine | isoleucine | methionine | valine | serine | proline | threonine |
@@ -17,95 +18,99 @@
 protein_list_length(L) -> length(L).
 
 % Compute protein list from nucleobase list.
-protein_list(NBL) -> protein_list(NBL, []).
+protein_list_from_nucleobase(NBL) -> protein_list_from_nucleobase(NBL, []).
 
-protein_list([], PL) -> PL;
-protein_list(NBL, PL) when length(NBL) < 3 -> error;
+protein_list_from_nucleobase([], PL) -> PL;
+protein_list_from_nucleobase(NBL, PL) when length(NBL) < 3 -> error;
 
-protein_list([uracil, uracil, uracil | T], PL) -> protein_list(T, PL ++ [phenylalanine]);
-protein_list([uracil, uracil, cytosine | T], PL) -> protein_list(T, PL ++ [phenylalanine]);
+protein_list_from_nucleobase([uracil, uracil, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [phenylalanine]);
+protein_list_from_nucleobase([uracil, uracil, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [phenylalanine]);
 
-protein_list([cytosine, uracil, uracil | T], PL) -> protein_list(T, PL ++ [leucine]);
-protein_list([uracil, uracil, adenine | T], PL) -> protein_list(T, PL ++ [leucine]);
-protein_list([cytosine, uracil, adenine | T], PL) -> protein_list(T, PL ++ [leucine]);
-protein_list([cytosine, uracil, cytosine | T], PL) -> protein_list(T, PL ++ [leucine]);
-protein_list([uracil, uracil, guanine | T], PL) -> protein_list(T, PL ++ [leucine]);
-protein_list([cytosine, uracil, guanine | T], PL) -> protein_list(T, PL ++ [leucine]);
+protein_list_from_nucleobase([cytosine, uracil, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
+protein_list_from_nucleobase([uracil, uracil, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
+protein_list_from_nucleobase([cytosine, uracil, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
+protein_list_from_nucleobase([cytosine, uracil, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
+protein_list_from_nucleobase([uracil, uracil, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
+protein_list_from_nucleobase([cytosine, uracil, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [leucine]);
 
-protein_list([adenine, uracil, uracil | T], PL) -> protein_list(T, PL ++ [isoleucine]);
-protein_list([adenine, uracil, cytosine | T], PL) -> protein_list(T, PL ++ [isoleucine]);
-protein_list([adenine, uracil, adenine | T], PL) -> protein_list(T, PL ++ [isoleucine]);
+protein_list_from_nucleobase([adenine, uracil, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [isoleucine]);
+protein_list_from_nucleobase([adenine, uracil, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [isoleucine]);
+protein_list_from_nucleobase([adenine, uracil, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [isoleucine]);
 
-protein_list([adenine, uracil, guanine | T], PL) -> protein_list(T, PL ++ [methionine]);
+protein_list_from_nucleobase([adenine, uracil, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [methionine]);
 
-protein_list([guanine, uracil, uracil | T], PL) -> protein_list(T, PL ++ [valine]);
-protein_list([guanine, uracil, cytosine | T], PL) -> protein_list(T, PL ++ [valine]);
-protein_list([guanine, uracil, adenine | T], PL) -> protein_list(T, PL ++ [valine]);
-protein_list([guanine, uracil, guanine | T], PL) -> protein_list(T, PL ++ [valine]);
+protein_list_from_nucleobase([guanine, uracil, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [valine]);
+protein_list_from_nucleobase([guanine, uracil, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [valine]);
+protein_list_from_nucleobase([guanine, uracil, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [valine]);
+protein_list_from_nucleobase([guanine, uracil, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [valine]);
 
-protein_list([uracil, cytosine, uracil | T], PL) -> protein_list(T, PL ++ [serine]);
-protein_list([uracil, cytosine, cytosine | T], PL) -> protein_list(T, PL ++ [serine]);
-protein_list([uracil, cytosine, adenine | T], PL) -> protein_list(T, PL ++ [serine]);
-protein_list([uracil, cytosine, guanine | T], PL) -> protein_list(T, PL ++ [serine]);
-protein_list([adenine, guanine, uracil | T], PL) -> protein_list(T, PL ++ [serine]);
-protein_list([adenine, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [serine]);
+protein_list_from_nucleobase([uracil, cytosine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
+protein_list_from_nucleobase([uracil, cytosine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
+protein_list_from_nucleobase([uracil, cytosine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
+protein_list_from_nucleobase([uracil, cytosine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
+protein_list_from_nucleobase([adenine, guanine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
+protein_list_from_nucleobase([adenine, guanine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [serine]);
 
-protein_list([guanine, cytosine, uracil | T], PL) -> protein_list(T, PL ++ [alanine]);
-protein_list([guanine, cytosine, cytosine | T], PL) -> protein_list(T, PL ++ [alanine]);
-protein_list([guanine, cytosine, adenine | T], PL) -> protein_list(T, PL ++ [alanine]);
-protein_list([guanine, cytosine, guanine | T], PL) -> protein_list(T, PL ++ [alanine]);
+protein_list_from_nucleobase([guanine, cytosine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [alanine]);
+protein_list_from_nucleobase([guanine, cytosine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [alanine]);
+protein_list_from_nucleobase([guanine, cytosine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [alanine]);
+protein_list_from_nucleobase([guanine, cytosine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [alanine]);
 
-protein_list([cytosine, cytosine, uracil | T], PL) -> protein_list(T, PL ++ [proline]);
-protein_list([cytosine, cytosine, cytosine | T], PL) -> protein_list(T, PL ++ [proline]);
-protein_list([cytosine, cytosine, adenine | T], PL) -> protein_list(T, PL ++ [proline]);
-protein_list([cytosine, cytosine, guanine | T], PL) -> protein_list(T, PL ++ [proline]);
+protein_list_from_nucleobase([cytosine, cytosine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [proline]);
+protein_list_from_nucleobase([cytosine, cytosine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [proline]);
+protein_list_from_nucleobase([cytosine, cytosine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [proline]);
+protein_list_from_nucleobase([cytosine, cytosine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [proline]);
 
-protein_list([adenine, cytosine, uracil | T], PL) -> protein_list(T, PL ++ [threonine]);
-protein_list([adenine, cytosine, cytosine | T], PL) -> protein_list(T, PL ++ [threonine]);
-protein_list([adenine, cytosine, adenine | T], PL) -> protein_list(T, PL ++ [threonine]);
-protein_list([adenine, cytosine, guanine | T], PL) -> protein_list(T, PL ++ [threonine]);
+protein_list_from_nucleobase([adenine, cytosine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [threonine]);
+protein_list_from_nucleobase([adenine, cytosine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [threonine]);
+protein_list_from_nucleobase([adenine, cytosine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [threonine]);
+protein_list_from_nucleobase([adenine, cytosine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [threonine]);
 
-protein_list([cytosine, guanine, uracil | T], PL) -> protein_list(T, PL ++ [argenine]);
-protein_list([cytosine, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [argenine]);
-protein_list([cytosine, guanine, guanine | T], PL) -> protein_list(T, PL ++ [argenine]);
-protein_list([adenine, guanine, guanine | T], PL) -> protein_list(T, PL ++ [argenine]);
-protein_list([cytosine, guanine, adenine | T], PL) -> protein_list(T, PL ++ [argenine]);
-protein_list([adenine, guanine, adenine | T], PL) -> protein_list(T, PL ++ [argenine]);
+protein_list_from_nucleobase([cytosine, guanine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
+protein_list_from_nucleobase([cytosine, guanine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
+protein_list_from_nucleobase([cytosine, guanine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
+protein_list_from_nucleobase([adenine, guanine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
+protein_list_from_nucleobase([cytosine, guanine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
+protein_list_from_nucleobase([adenine, guanine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [argenine]);
 
-protein_list([uracil, adenine, uracil | T], PL) -> protein_list(T, PL ++ [tyrosine]);
-protein_list([uracil, adenine, cytosine | T], PL) -> protein_list(T, PL ++ [tyrosine]);
+protein_list_from_nucleobase([uracil, adenine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [tyrosine]);
+protein_list_from_nucleobase([uracil, adenine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [tyrosine]);
 
-protein_list([cytosine, adenine, uracil | T], PL) -> protein_list(T, PL ++ [histidine]);
-protein_list([cytosine, adenine, cytosine | T], PL) -> protein_list(T, PL ++ [histidine]);
+protein_list_from_nucleobase([cytosine, adenine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [histidine]);
+protein_list_from_nucleobase([cytosine, adenine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [histidine]);
 
-protein_list([adenine, adenine, uracil | T], PL) -> protein_list(T, PL ++ [asparagine]);
-protein_list([adenine, adenine, cytosine | T], PL) -> protein_list(T, PL ++ [asparagine]);
+protein_list_from_nucleobase([adenine, adenine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [asparagine]);
+protein_list_from_nucleobase([adenine, adenine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [asparagine]);
 
-protein_list([guanine, adenine, uracil | T], PL) -> protein_list(T, PL ++ [aspartic_acid]);
-protein_list([guanine, adenine, cytosine | T], PL) -> protein_list(T, PL ++ [aspartic_acid]);
+protein_list_from_nucleobase([guanine, adenine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [aspartic_acid]);
+protein_list_from_nucleobase([guanine, adenine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [aspartic_acid]);
 
-protein_list([uracil, adenine, adenine | T], PL) -> protein_list(T, PL ++ [protein_stop]);
-protein_list([uracil, adenine, guanine | T], PL) -> protein_list(T, PL ++ [protein_stop]);
-protein_list([uracil, guanine, adenine | T], PL) -> protein_list(T, PL ++ [protein_stop]);
+protein_list_from_nucleobase([uracil, adenine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [protein_stop]);
+protein_list_from_nucleobase([uracil, adenine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [protein_stop]);
+protein_list_from_nucleobase([uracil, guanine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [protein_stop]);
 
-protein_list([cytosine, adenine, adenine | T], PL) -> protein_list(T, PL ++ [glutamine]);
-protein_list([cytosine, adenine, guanine | T], PL) -> protein_list(T, PL ++ [glutamine]);
+protein_list_from_nucleobase([cytosine, adenine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glutamine]);
+protein_list_from_nucleobase([cytosine, adenine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glutamine]);
 
-protein_list([adenine, adenine, adenine | T], PL) -> protein_list(T, PL ++ [lysine]);
-protein_list([adenine, adenine, guanine | T], PL) -> protein_list(T, PL ++ [lysine]);
+protein_list_from_nucleobase([adenine, adenine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [lysine]);
+protein_list_from_nucleobase([adenine, adenine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [lysine]);
 
-protein_list([guanine, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [glycine]);
-protein_list([guanine, guanine, uracil | T], PL) -> protein_list(T, PL ++ [glycine]);
-protein_list([guanine, guanine, adenine | T], PL) -> protein_list(T, PL ++ [glycine]);
-protein_list([guanine, guanine, guanine | T], PL) -> protein_list(T, PL ++ [glycine]);
+protein_list_from_nucleobase([guanine, guanine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glycine]);
+protein_list_from_nucleobase([guanine, guanine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glycine]);
+protein_list_from_nucleobase([guanine, guanine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glycine]);
+protein_list_from_nucleobase([guanine, guanine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glycine]);
 
-protein_list([guanine, adenine, adenine | T], PL) -> protein_list(T, PL ++ [glutamic_acid]);
-protein_list([guanine, adenine, guanine | T], PL) -> protein_list(T, PL ++ [glutamic_acid]);
+protein_list_from_nucleobase([guanine, adenine, adenine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glutamic_acid]);
+protein_list_from_nucleobase([guanine, adenine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [glutamic_acid]);
 
-protein_list([uracil, guanine, uracil | T], PL) -> protein_list(T, PL ++ [cysteine]);
-protein_list([uracil, guanine, cytosine | T], PL) -> protein_list(T, PL ++ [cysteine]);
+protein_list_from_nucleobase([uracil, guanine, uracil | T], PL) -> protein_list_from_nucleobase(T, PL ++ [cysteine]);
+protein_list_from_nucleobase([uracil, guanine, cytosine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [cysteine]);
 
-protein_list([uracil, guanine, guanine | T], PL) -> protein_list(T, PL ++ [tryptophan]).
+protein_list_from_nucleobase([uracil, guanine, guanine | T], PL) -> protein_list_from_nucleobase(T, PL ++ [tryptophan]).
+
+
+
+
 
 % Create string representation of a protein list.
 protein_list_string(PL) -> protein_list_string(PL, []).
