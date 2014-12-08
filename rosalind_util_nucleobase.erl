@@ -19,11 +19,11 @@ nucleobase_list(L) -> nucleobase_list(L, []).
 nucleobase_list([], L) -> L;
 nucleobase_list([H | T], NL) ->
     case H of
-        65 -> nucleobase_list(T, NL ++ [adenine]);
-        67 -> nucleobase_list(T, NL ++ [cytosine]);
-        71 -> nucleobase_list(T, NL ++ [guanine]);
-        84 -> nucleobase_list(T, NL ++ [thymine]);
-        85 -> nucleobase_list(T, NL ++ [uracil]);
+        $A -> nucleobase_list(T, NL ++ [adenine]);
+        $C -> nucleobase_list(T, NL ++ [cytosine]);
+        $G -> nucleobase_list(T, NL ++ [guanine]);
+        $T -> nucleobase_list(T, NL ++ [thymine]);
+        $U -> nucleobase_list(T, NL ++ [uracil]);
         _ ->
             nucleobase_list(T, NL)
     end.
@@ -35,11 +35,11 @@ nucleobase_list_string(N) -> nucleobase_list_string(N, []).
 nucleobase_list_string([], S) -> S;
 nucleobase_list_string([H | T], S) ->
     case H of
-        adenine -> nucleobase_list_string(T, S ++ [65]);
-        cytosine -> nucleobase_list_string(T, S ++ [67]);
-        guanine -> nucleobase_list_string(T, S ++ [71]);
-        thymine -> nucleobase_list_string(T, S ++ [84]);
-        uracil -> nucleobase_list_string(T, S ++ [85])
+        adenine -> nucleobase_list_string(T, S ++ [$A]);
+        cytosine -> nucleobase_list_string(T, S ++ [$C]);
+        guanine -> nucleobase_list_string(T, S ++ [$G]);
+        thymine -> nucleobase_list_string(T, S ++ [$T]);
+        uracil -> nucleobase_list_string(T, S ++ [$U])
     end.
 
 % Print nucleobase sequence.
