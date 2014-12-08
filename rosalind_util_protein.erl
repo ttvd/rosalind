@@ -20,26 +20,26 @@ protein_list_length(L) -> length(L).
 % Compute protein list from string.
 protein_list(PS) -> protein_list(PS, []).
 protein_list([], S) -> S;
-protein_list([$F | T], S) -> protein_list(T, S ++ phenylalanine);
-protein_list([$L | T], S) -> protein_list(T, S ++ leucine);
-protein_list([$I | T], S) -> protein_list(T, S ++ isoleucine);
-protein_list([$M | T], S) -> protein_list(T, S ++ methionine);
-protein_list([$V | T], S) -> protein_list(T, S ++ valine);
-protein_list([$S | T], S) -> protein_list(T, S ++ serine);
-protein_list([$P | T], S) -> protein_list(T, S ++ proline);
-protein_list([$T | T], S) -> protein_list(T, S ++ threonine);
-protein_list([$A | T], S) -> protein_list(T, S ++ alanine);
-protein_list([$Y | T], S) -> protein_list(T, S ++ tyrosine);
-protein_list([$H | T], S) -> protein_list(T, S ++ histidine);
-protein_list([$Q | T], S) -> protein_list(T, S ++ glutamine);
-protein_list([$N | T], S) -> protein_list(T, S ++ asparagine);
-protein_list([$K | T], S) -> protein_list(T, S ++ lysine);
-protein_list([$D | T], S) -> protein_list(T, S ++ aspartic_acid);
-protein_list([$E | T], S) -> protein_list(T, S ++ glutamic_acid);
-protein_list([$C | T], S) -> protein_list(T, S ++ cysteine);
-protein_list([$R | T], S) -> protein_list(T, S ++ argenine);
-protein_list([$G | T], S) -> protein_list(T, S ++ glycine);
-protein_list([$W | T], S) -> protein_list(T, S ++ tryptophan).
+protein_list([$F | T], S) -> protein_list(T, S ++ [phenylalanine]);
+protein_list([$L | T], S) -> protein_list(T, S ++ [leucine]);
+protein_list([$I | T], S) -> protein_list(T, S ++ [isoleucine]);
+protein_list([$M | T], S) -> protein_list(T, S ++ [methionine]);
+protein_list([$V | T], S) -> protein_list(T, S ++ [valine]);
+protein_list([$S | T], S) -> protein_list(T, S ++ [serine]);
+protein_list([$P | T], S) -> protein_list(T, S ++ [proline]);
+protein_list([$T | T], S) -> protein_list(T, S ++ [threonine]);
+protein_list([$A | T], S) -> protein_list(T, S ++ [alanine]);
+protein_list([$Y | T], S) -> protein_list(T, S ++ [tyrosine]);
+protein_list([$H | T], S) -> protein_list(T, S ++ [histidine]);
+protein_list([$Q | T], S) -> protein_list(T, S ++ [glutamine]);
+protein_list([$N | T], S) -> protein_list(T, S ++ [asparagine]);
+protein_list([$K | T], S) -> protein_list(T, S ++ [lysine]);
+protein_list([$D | T], S) -> protein_list(T, S ++ [aspartic_acid]);
+protein_list([$E | T], S) -> protein_list(T, S ++ [glutamic_acid]);
+protein_list([$C | T], S) -> protein_list(T, S ++ [cysteine]);
+protein_list([$R | T], S) -> protein_list(T, S ++ [argenine]);
+protein_list([$G | T], S) -> protein_list(T, S ++ [glycine]);
+protein_list([$W | T], S) -> protein_list(T, S ++ [tryptophan]).
 
 % Compute protein list from nucleobase list.
 protein_list_from_nucleobase(NBL) -> protein_list_from_nucleobase(NBL, []).
