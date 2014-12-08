@@ -3,7 +3,7 @@
 
 -module(rosalind_util_protein).
 -import(rosalind_util_nucleobase, [nucleobase_list/1]).
--export([protein_list_length/1, protein_list/1, protein_list_string/1, protein_list_print/1]).
+-export([protein_list_length/1, protein_list/1, protein_list_string/1, protein_list_print/1, protein_list_mass/1]).
 
 % List of possible proteins (F, L, I, M, V, S, P, T, A, Y, H, Q, N, K, D, E, C, W, R, G, Stop).
 -type protein() :: phenylalanine | leucine | isoleucine | methionine | valine | serine | proline | threonine |
@@ -132,6 +132,32 @@ protein_list_string([argenine | T], S) -> protein_list_string(T, S ++ "R");
 protein_list_string([glycine | T], S) -> protein_list_string(T, S ++ "G");
 protein_list_string([tryptophan | T], S) -> protein_list_string(T, S ++ "W");
 protein_list_string([protein_stop | T], S) -> protein_list_string(T, S).
+
+% Compute mass of protein sequence.
+protein_list_mass(PL) -> protein_list_mass(PL, 0.0).
+
+protein_list_mass([], Mass) -> Mass;
+protein_list_mass([phenylalanine | T], Mass) -> protein_list_mass(T, Mass + 147.06841);
+protein_list_mass([leucine | T], Mass) -> protein_list_mass(T, Mass + 113.08406);
+protein_list_mass([isoleucine | T], Mass) -> protein_list_mass(T, Mass + 113.08406);
+protein_list_mass([methionine | T], Mass) -> protein_list_mass(T, Mass + 131.04049);
+protein_list_mass([valine | T], Mass) -> protein_list_mass(T, Mass + 99.06841);
+protein_list_mass([serine | T], Mass) -> protein_list_mass(T, Mass + 87.03203);
+protein_list_mass([proline | T], Mass) -> protein_list_mass(T, Mass + 97.05276);
+protein_list_mass([threonine | T], Mass) -> protein_list_mass(T, Mass + 101.04768);
+protein_list_mass([alanine | T], Mass) -> protein_list_mass(T, Mass + 71.03711);
+protein_list_mass([tyrosine | T], Mass) -> protein_list_mass(T, Mass + 163.06333);
+protein_list_mass([histidine | T], Mass) -> protein_list_mass(T, Mass + 137.05891);
+protein_list_mass([glutamine | T], Mass) -> protein_list_mass(T, Mass + 128.05858);
+protein_list_mass([asparagine | T], Mass) -> protein_list_mass(T, Mass + 114.04293);
+protein_list_mass([lysine | T], Mass) -> protein_list_mass(T, Mass + 128.09496);
+protein_list_mass([aspartic_acid | T], Mass) -> protein_list_mass(T, Mass + 115.02694);
+protein_list_mass([glutamic_acid | T], Mass) -> protein_list_mass(T, Mass + 129.04259);
+protein_list_mass([cysteine | T], Mass) -> protein_list_mass(T, Mass + 103.00919);
+protein_list_mass([argenine | T], Mass) -> protein_list_mass(T, Mass + 156.10111);
+protein_list_mass([glycine | T], Mass) -> protein_list_mass(T, Mass + 57.02146);
+protein_list_mass([tryptophan | T], Mass) -> protein_list_mass(T, Mass + 186.07931);
+protein_list_mass([protein_stop | T], Mass) -> Mass.
 
 % Print protein sequence.
 protein_list_print(PL) ->
