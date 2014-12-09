@@ -2,7 +2,7 @@
 % 12/04/2014.
 
 -module(rosalind_util_list).
--export([list_drop_head/2, list_print_space_separated/1, list_is_palindrome/1, lists_compare/2, lists_reverse/1]).
+-export([list_drop_head/2, list_print_space_separated/1, list_is_palindrome/1, lists_compare/2, list_reverse/1]).
 
 % Drop N elements from beginning of a list.
 list_drop_head([], _N) -> [];
@@ -31,5 +31,5 @@ lists_compare([H | TL], [H | TR]) -> lists_compare(TL, TR);
 lists_compare([_HL | _TL], [_HR | _TR]) -> false.
 
 % Reverse a list.
-lists_reverse([]) -> [];
-lists_reverse([H | T]) -> lists_reverse(T) ++ [H].
+list_reverse([]) -> [];
+list_reverse([H | T]) -> list_reverse(T) ++ [H].
