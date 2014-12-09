@@ -3,7 +3,7 @@
 
 -module(rosalind_util_nucleobase).
 -export([nucleobase_list/1, nucleobase_list_print/1, nucleobase_list_string/1, nucleobase_list_length/1]).
--export([nucleobase_list_count_gc/1, nucleobase_list_reverse/1]).
+-export([nucleobase_list_count_gc/1, nucleobase_list_complement/1]).
 
 % List of possible nucleobases.
 -type nucleobase() :: adenine | guanine | thymine | cytosine | uracil.
@@ -56,10 +56,10 @@ nucleobase_list_count_gc([H | T], Count) ->
         _ -> nucleobase_list_count_gc(T, Count)
     end.
 
-% Compute reverse sequence.
-nucleobase_list_reverse(L) -> nucleobase_list_reverse(L, []).
-nucleobase_list_reverse([guanine | T], S) -> nucleobase_list_reverse(T, S ++ [cytosine]);
-nucleobase_list_reverse([cytosine | T], S) -> nucleobase_list_reverse(T, S ++ [guanine]);
-nucleobase_list_reverse([adenine | T], S) -> nucleobase_list_reverse(T, S ++ [thymine]);
-nucleobase_list_reverse([thymine | T], S) -> nucleobase_list_reverse(T, S ++ [adenine]);
-nucleobase_list_reverse([], S) -> S.
+% Compute complement sequence.
+nucleobase_list_complement(L) -> nucleobase_list_complement(L, []).
+nucleobase_list_complement([guanine | T], S) -> nucleobase_list_complement(T, S ++ [cytosine]);
+nucleobase_list_complement([cytosine | T], S) -> nucleobase_list_complement(T, S ++ [guanine]);
+nucleobase_list_complement([adenine | T], S) -> nucleobase_list_complement(T, S ++ [thymine]);
+nucleobase_list_complement([thymine | T], S) -> nucleobase_list_complement(T, S ++ [adenine]);
+nucleobase_list_complement([], S) -> S.
