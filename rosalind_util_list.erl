@@ -2,7 +2,7 @@
 % 12/04/2014.
 
 -module(rosalind_util_list).
--export([list_drop_head/2, list_print_space_separated/1, list_is_palindrome/1]).
+-export([list_drop_head/2, list_print_space_separated/1, list_is_palindrome/1, lists_compare/2]).
 
 % Drop N elements from beginning of a list.
 list_drop_head([], _N) -> [];
@@ -22,3 +22,10 @@ list_is_palindrome(L) ->
         true -> list_is_palindrome(lists:droplast(T));
         false -> false
     end.
+
+% Compare two lists element wise.
+lists_compare([], []) -> true;
+lists_compare([], _R) -> false;
+lists_compare(_L, []) -> false;
+lists_compare([H | TL], [H | TR]) -> lists_compare(TL, TR);
+lists_compare([_HL | _TL], [_HR | _TR]) -> false.
